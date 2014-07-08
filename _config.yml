@@ -1,3 +1,10 @@
-name: nephelogy.io
+title: hypernephelist
+tagline: 'to the cloud and beyond!'
+description: 'A blog about cloud technologies maintained by Thomas Conte, Technical Evangelist at Microsoft.'
+
+version: 0.1
+
+paginate: 5
+
 markdown: redcarpet
 pygments: true
