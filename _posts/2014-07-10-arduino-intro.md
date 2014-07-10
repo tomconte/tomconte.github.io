@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2014-07-10
 title: Introduction to the Arduino series
 ---
 
