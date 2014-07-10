@@ -94,13 +94,20 @@ In the code below, I am using the Ethernet libray to open a connection to the Az
 - `server` is the address of your Mobile Services endpoint.
 - `table_name` is the name of the table you created above.
 - `ams_key` is your Mobile Services application key
+- you should also probably change the MAC address in `mac` for the Ethernet shield (your MAC address is usually on a sticker at the back of the shield)
 
 You could also look at line 59, where I hard-coded the name of the JSON object property to "value". This will become the name of column where the data is stored.
 
 <script src="https://gist.github.com/tomconte/4fe5ab0f29d60253d1a3.js">
 </script>
 
-I am assembling the request headers on the fly, and then display the response on the serial port for debugging. I only keep the first line of the response, i.e. the HTTP response code, which should be "201 created".
+Here is a quick overview of the different functions in the code:
+
+- `setup` initializes the Serial port and the Ethernet shield using the DHCP method (you should have a working DHCP server on your network).
+- `loop` reads the sensor value on line A0 and then calls the following network functions.
+- `send_request` is where most of the work happens. A TCP connection is established to the Mobile Services endpoint, and the HTTP POST request is emitted. The headers are the same as shown in the cURL example above, e.g. the `Host` with the name of your endpoint, the `X-ZUMO-APPLICATION` key, and the JSON `Content-Type`. The body contains a simple JSON object with the value from the sensor.
+- `wait_response` just blocks until some bytes are available on the connection.
+- `read_response` will read all the response bytes, and just print the HTTP response code to the serial console for debugging.
 
 Below a screenshot of the program running in the Arduino IDE, with the Serial Monitor open.
 
