@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2014-07-11
 title: Connecting the Arduino Uno to Azure Mobile Services
 ---
 
