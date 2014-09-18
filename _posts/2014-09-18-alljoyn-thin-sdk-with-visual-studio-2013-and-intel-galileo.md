@@ -1,10 +1,12 @@
 ---
 layout: post
-date: 2014-09-15
+date: 2014-09-18
 title: Using the Alljoyn Thin SDK with Visual Studio 2013 and the Intel Galileo
 ---
 
-As part of our exploration of the Alljoyn framework, we have spent some time studying the Alljoyn Thin Client and how it can be used on the Microsoft platform. The Alljoyn Thin Client (AJTC) is a lightweight, stand-alone implementation of the Alljoyn protocol, suitable for using in limited or contrained environments like embedded devices. Our end goal was to get AJTC running on the Intel Galileo board running Windows for Devices, so that we could build an end-to-end scenario showing an Alljoyn standard client, running on Windows 8, communicating with a Galileo device running the thin client.
+As part of our exploration of the IoT space, my team has spent some time [studying the Alljoyn framework and how it can be used on the Microsoft platform](http://azure.microsoft.co.il/?p=164). The _Alljoyn Thin Client (AJTC)_ is a lightweight, stand-alone implementation of the Alljoyn protocol, suitable for using in limited or contrained environments like embedded devices. The end goal of our hackfest was to get AJTC running on the Intel Galileo board running Windows for Devices, so that we could build an end-to-end scenario showing an Alljoyn standard client, running on Windows 8, communicating with a Galileo device running the thin client.
+
+In this blog post, authored with the help and expertise of my colleague [Daniele Colonna](http://linkedin.com/pub/daniele-colonna/4/299/258) from the Windows IoT product group, I would like to focus on the AJTC part of the project: getting it to compile on Windows with Visual Studio 2013, then using the SDK from the [Windows Developer Program for IoT](https://dev.windows.com/en-us/featured/Windows-Developer-Program-for-IoT) to port it to the Intel Galileo. 
 
 ## Compiling with Visual Studio 2013 and SCons
 
@@ -122,4 +124,4 @@ GalileoAJTCSample.exe
 
 This will allow you to see the standard output from the application.
 
-You could now modify the service and client samples to do something slightly more useful, like turning a LED on or off! This will be the subject of further blog posts.
+You could now modify the service and client samples to do something slightly more useful, like turning a LED on or off! This will be the subject of further blog posts by the talented team that took part in this hackfest: [@joshholmes](https://twitter.com/joshholmes), [@mszcool](https://twitter.com/mszcool), [@reichenseer](https://twitter.com/reichenseer), [@jmspring](https://twitter.com/jmspring), [@timpark](https://twitter.com/timpark), [@irjudson](https://twitter.com/irjudson), [@ankoduizer](https://twitter.com/ankoduizer), [@rachelyehe](https://twitter.com/Rachelyehe) and [Daniele Colonna](http://linkedin.com/pub/daniele-colonna/4/299/258); please follow them to keep track of our next publications!
