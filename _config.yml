@@ -8,4 +8,4 @@ version: 0.1
 paginate: 5
 
 markdown: redcarpet
-pygments: true
+highlighter: rouge
