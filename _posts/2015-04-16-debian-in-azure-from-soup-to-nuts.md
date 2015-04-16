@@ -24,12 +24,16 @@ Then create the VM in Hyper-V:
 - Select "Attach a virtual disk later" since we want to customize this. Next.
 - Finish.
 
-Now select your new VM and click on Settings. We need to change a few things there.
+Now select your new VM and click on Settings. We need to change a few things there. Like removing the default Network Adapter:
 
 - Select the Network Adapter that was created originally and click "Remove", then "Apply".
 
+And adding a Legacy one:
+
 - Select "Add Hardware", "Legacy Network Adapter", "Add".
 - Connect it to a Virtual Switch so that it can access the Internet. Click "Apply".
+
+Then adding a disk:
 
 - Select "IDE Controller 0", "Hard Drive", "Add".
 - In "Virtual hard disk", click "New".
