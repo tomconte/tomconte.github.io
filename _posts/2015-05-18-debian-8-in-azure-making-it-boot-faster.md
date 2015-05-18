@@ -1,4 +1,8 @@
-Running Debian 8 "Jessie" in Azure: making it boot faster
+---
+layout: post
+date: 2015-05-18
+title: Running Debian 8 "Jessie" in Azure: making it boot faster
+---
 
 I have recently uploaded a hand-made version of [Debian "8" Jessie for Azure in the VMDepot repository](https://vmdepot.msopentech.com/Vhd/Show?vhdId=52539). It was before I discovered [bootrap-vz](https://github.com/andsens/bootstrap-vz) and its ability to automatically generate Debian images for various virtualised and Cloud environments!
 
