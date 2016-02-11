@@ -1,11 +1,15 @@
 title: hypernephelist
-tagline: 'Thomas Conté, Azure Technical Evangelist, Microsoft'
-description: 'A blog about cloud technologies maintained by Thomas Conté, Technical Evangelist at Microsoft.'
+tagline: 'n. [from Greek nepho-, cloud] someone who goes above the clouds.'
+description: 'A technical blog by Thomas Conté on cloud, devices, and everything in between.'
 url: 'http://hypernephelist.com'
 
-version: 0.1
+version: 1.0
 
 paginate: 5
 
 markdown: redcarpet
 highlighter: pygments
+
+gems:
+  - jekyll-gist
+  - jekyll-paginate
