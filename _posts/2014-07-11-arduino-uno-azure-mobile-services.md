@@ -26,31 +26,31 @@ The next screen will ask you the details about your database: most importantly t
 
 If you are more of a command-line person, you can also use our command-line tools on a Mac, Linux or Windows system. First you should use `azure sql server list` to find an available SQL Server instance:
 
-```
+~~~
 azure sql server list
-```
+~~~
 
 This will display a list like this one:
 
-```
+~~~
 info:    Executing command sql server list
 + Getting SQL server
 data:    Name        Location
 data:    ----------  ------------
 data:    kv5xxxxbkk  North Europe
 info:    sql server list command OK
-```
+~~~
 
 Then then `azure mobile create` command to create a new Mobile Service backend using that server:
 
-```
+~~~
 azure mobile create myarduinosvc --sqlServer kv5xxxxbkk \
 --location "North Europe"
-```
+~~~
 
 The output will look like this:
 
-```
+~~~
 info:    Executing command mobile create
 SQL administrator user name: xxx
 SQL administrator password: ********
@@ -61,7 +61,7 @@ info:    Mobile service (myarduinosvc) state: ProvisionConfigured
 info:    SQL database (myarduinosvc_db) state: Provisioned
 info:    SQL server (kv5xxxxbkk) state: Linked
 info:    mobile create command OK
-```
+~~~
 
 ## Creating a Table
 
@@ -75,12 +75,12 @@ Once your table is created, it is very simple to insert data using the [Mobile S
 
 Now you have all the elements you need. If you have cURL installed, you can insert a record from the command line like so:
 
-```
+~~~
 curl -v -X POST -H Content-Type:application/json \
 -H X-ZUMO-APPLICATION:xxxxzKyLxxxxRxiAxxxxWkrixxxxFa50 \
 -d '{"test": 42}' \
 http://arduinouno.azure-mobile.net/tables/telemetry
-```
+~~~
 
 The `X-ZUMO-APPLICATION` header contains your application key. As you can see in the URL, my table is named "telemetry". The body of the POST request just needs to contain a valid JSON object that will be persisted in the table.
 

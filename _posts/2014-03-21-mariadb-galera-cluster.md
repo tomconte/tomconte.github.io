@@ -210,7 +210,7 @@ I also modified the JDBC URL:
 
 Here is the code:
 
-```java
+~~~java
 import java.sql.*;
 
 public class MysqlTest
@@ -267,7 +267,7 @@ public class MysqlTest
         }
     }
 }
-```
+~~~
 
 You can compile and run the program like this:
 

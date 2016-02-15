@@ -7,9 +7,6 @@ version: 1.0
 
 paginate: 5
 
-markdown: redcarpet
-highlighter: pygments
-
 gems:
   - jekyll-gist
   - jekyll-paginate

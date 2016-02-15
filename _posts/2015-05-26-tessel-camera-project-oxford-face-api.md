@@ -8,15 +8,15 @@ In this post I will to show you how to use the [Project Oxford](https://www.proj
 
 I am going to use the [Tessel Camera module](https://tessel.io/modules#module-camera) plugged in port "A" to take a picture when the Config button is pressed. This is very easy with the Tessel and the code looks like this:
 
-```javascript
+~~~javascript
 tessel.button.on('press', function() {
   takePicture();
 });
-```
+~~~
 
 As you can see the `tessel` module gives us some convenience objects to easily bind a callback to the button. The function `takePicture` is where we will use the Tessel-provided Camera module to actually take the picture:
 
-```javascript
+~~~javascript
 function takePicture() {
   // Take a picture
   camera.takePicture(function(err, image) {
@@ -29,13 +29,13 @@ function takePicture() {
     }	
   });
 }
-```
+~~~
 
 The Tessel makes it really easy to use the Camera module. Now we need to upload this picture somewhere so we can use it with the Project Oxford APIs. What a coincidence, I happen to know a very good cloud storage platform!
 
 We are going to upload the image to **Azure Blob Storage** using a Shared Access Signature for authorization. The code looks like this: (some details omitted, please check the [full source code](https://github.com/tomconte/oxford-tessel-demo))
 
-```javascript
+~~~javascript
 function uploadPicture(name, image)
 {
   var url = 'http://' + blob_host + '/' + blob_container + '/' + name;
@@ -63,25 +63,25 @@ function uploadPicture(name, image)
   req.write(image);
   req.end();
 }
-```
+~~~
 
 We are simply using the standard Node.JS HTTP module here to upload the picture via a PUT request. The only magic value is `blob_sas`, which is defined like this:
 
-```javascript
+~~~javascript
 var blob_sas = '?sv=2014-02-14&sr=c&sig=xxxx&se=2019-12-31T23%3A00%3A00Z&sp=rwdl';
-```
+~~~
 
 This key gives the bearer (i.e. your Tessel program) some rights on a specific Blob Container. You can use a number of tools to generate this Shared Access Key e.g. Azure Management Studio, or Azure Storage Explorer. You can also use the Azure PowerShell cmdlets:
 
-```
+~~~
 New-AzureStorageContainerSASToken -Name test -Permission rwdl
-```
+~~~
 
 All these tools will output a SAS string that you can just copy/paste into your code.
 
 Finally, we are going to send the resulting picture URL to the Project Oxford Face Detection API in order to detect faces in the picture!
 
-```javascript
+~~~javascript
 function faceDetect(url) {
   var json = JSON.stringify({'url':url});
 
@@ -104,11 +104,11 @@ function faceDetect(url) {
     });
   });
 }
-```
+~~~
 
 The result from the Face API call tells us if it found a face in the picture, and if yes it tries to evaluate its gender and age. Here is how you can interpret the response from the API:
 
-```javascript
+~~~javascript
 // Face API response
 var face = JSON.parse(d);
 
@@ -126,7 +126,7 @@ if (face.length == 0) {
   console.log(face[0].attributes.age);
 
 }
-```
+~~~
 
 Basically, you parse the JSON returned from the Face API. If it is an empty array, then no faces were detected. If it is an array containing one entry or more, then you will get the following information for each face:
 
@@ -138,9 +138,9 @@ Basically, you parse the JSON returned from the Face API. If it is an empty arra
 
 Some of these attributes must be requested in the API call, for example here is the one I used:
 
-```javascript
+~~~javascript
 var faceapi_request = '/face/v0/detections?analyzesFaceLandmarks=false&analyzesAge=true&analyzesGender=true&analyzesHeadPose=false';
-```
+~~~
 
 You can see here that I requested "face landmarks", "age" and "gender", but did not request "head pose".
 

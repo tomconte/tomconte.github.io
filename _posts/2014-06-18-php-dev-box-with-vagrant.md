@@ -18,7 +18,7 @@ Then we are going to base our configuration on the "dummy Azure box" provided by
 
 Next, create an empty directory as your project root, and create a Vagrantfile in it. Here is a Vagrantfile for Azure, let's look at it in detail.
 
-```ruby
+~~~ruby
 Vagrant.configure('2') do |config|
     config.vm.box = 'trusty64'
 
@@ -56,7 +56,7 @@ Vagrant.configure('2') do |config|
 
     config.vm.provision :shell, :path => "bootstrap.sh"
 end
-```
+~~~
 
 Here are the parameters you need to change:
 
@@ -73,13 +73,13 @@ Here are the parameters you need to change:
 
 So far, we have configured everything we need to create and provision the Virtual Machine, now we need to configure the development environment for LAMP, i.e. install PHP, MySQL, etc. An easy way to do it is to instruct Vagrant to run a shell script to bootstrap the VM, this is what the following line does:
 
-```ruby
+~~~ruby
 config.vm.provision :shell, :path => "bootstrap.sh"
-```
+~~~
 
 This will automatically run the `bootstrap.sh` script in the VM. Let's have a look at the script.
 
-```bash
+~~~bash
 #!/bin/bash
 
 # Add Node repo
@@ -115,7 +115,7 @@ do
   sed -i "s/;date.timezone =/date.timezone = Europe\/Paris/" $f
   echo "xdebug.max_nesting_level=250" >> $f
 done
-```
+~~~
 
 This script basically installs everything you need to run a LAMP application, plus the Azure Command-Line Interface and configures some Symfony2-specific parameters. In more detail:
 
@@ -129,39 +129,39 @@ This script basically installs everything you need to run a LAMP application, pl
 
 Now all you need to do to start your development environment is to run the magic Vagrant commands to start and provision the VM:
 
-```
+~~~
 vagrant up --provider=azure
 vagrant provision
-```
+~~~
 
 The machine is now ready to use! You can log in using the following command:
 
-```
+~~~
 vagrant ssh
-```
+~~~
 
 Now that your development machine environment is entirely automated, you can check it into your source code repository and keep track of any changes you need to make to it. Other developers can use this configuration in order to exactly reproduce the same development environment, automatically.
 
 Let's test our new environment, for example we can check out a sample Symfony2 project:
 
-```
+~~~
 git clone https://github.com/tomconte/symfony-azure.git
-```
+~~~
 
 Run Composer:
 
-```
+~~~
 cd symfony-azure
 curl -sS https://getcomposer.org/installer | php
 php composer.phar install
-```
+~~~
 
 Symfony will prompt you for your configuration information; you can accept all the defaults, but don't forget to give the right root password for MySQL! Now you should be able to check everything is OK and run the demo app:
 
-```
+~~~
 php app/check.php
 php app/console server:run 0.0.0.0:8000
-```
+~~~
 
 I hope this article gave you a good idea of how to use Vagrant together with Azure to easily spin up automated and standardized development environments.
 

@@ -14,9 +14,9 @@ Of course the first thing I wanted to try is to somehow connect the Tessel to Az
 
 Of course before you can talk to the mighty Cloud, you need to get your Tessel connected. This is incredibly easy, because this tiny board already has a onboard Wi-Fi chip as well! All you need to do is to run a command like this to connect to your Wi-Fi network:
 
-```
+~~~
 tessel wifi -n narnia -p mysecretpassphrase
-```
+~~~
 
 So here is a little sample, based on the basic [Camera module sample](http://start.tessel.io/modules/camera). This script will take a picture and upload it to Azure Blob Storage, using a Shared Access Key to securely access the destination container.
 
@@ -40,15 +40,15 @@ Using this technique, uploading a file to Blob Storage is really easy, using the
 
 You will find the full source code in the Gist below. To run it you will first need to install the Node module for the Tessel Camera:
 
-```
+~~~
 npm install camera-vc0706
-```
+~~~
 
 You will need to change the Azure parameters, i.e. `blob_host`, `blob_container`, and `blob_sas`. Then you should be able to run the script on the Tessel:
 
-```
+~~~
 tessel run azurecam.js
-```
+~~~
 
 Full source code:
 

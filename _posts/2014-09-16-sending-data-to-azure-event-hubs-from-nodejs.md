@@ -14,7 +14,7 @@ I wrote a Node.JS sample to demonstrate the same from a pure JavaScript environm
 
 The Event Hub REST API call itself is simple, the tricky part is to generate the SAS token. Here is the function that does the job:
 
-```javascript
+~~~javascript
 // Create a SAS token
 // See http://msdn.microsoft.com/library/azure/dn170477.aspx
 
@@ -31,7 +31,7 @@ function create_sas_token(uri, key_name, key)
 
     return token;
 }
-```
+~~~
 
 Here is a breakdown of the process:
 
@@ -48,9 +48,9 @@ Then you would use these configuration values to call the function:
 
 - `uri`: the URI for which you want to generate a SAS token. In our case, this is the full URI of the publisher associated to our device, e.g. something that looks like this:
 
-```
+~~~
 https://mynamespace.servicebus.windows.net/myeventhubs/publishers/mydevice/messages
-```
+~~~
 
 - `key_name`: the name of the Shared Access Policy, i.e. "send" in my case.
 - `key`: the corresponding key.

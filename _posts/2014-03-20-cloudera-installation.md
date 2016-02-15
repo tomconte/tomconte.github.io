@@ -26,7 +26,7 @@ Preparing our SSH keys
 
 First, let's create an SSH key and certificate to use for authentication. This will be useful in order to log on to all our VMs without being prompted for passwords. You can find a more detailed SSH procedure in the [Windows Azure documentation for Linux Virtual Machines](http://www.windowsazure.com/en-us/manage/linux/how-to-guides/ssh-into-linux/). This is slightly different from what you would do usually to generate new SSH keys (i.e., use `ssh-keygen`).
 
-```
+~~~
 $ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout myPrivateKey.key -out myCert.pem
 Generating a 2048 bit RSA private key
 ....+++
@@ -47,22 +47,22 @@ Organization Name (eg, company) [Internet Widgits Pty Ltd]:Microsoft
 Organizational Unit Name (eg, section) []:DPE
 Common Name (e.g. server FQDN or YOUR name) []:Thomas Conte
 Email Address []:tconte@microsoft.com
-```
+~~~
 
 Windows Azure needs the SSH public key to be embedded in a PEM formatted certificate, but you could enter any information you want, it doesn't matter. It's only the generated public key we are interested in!
 
 Let's secure the key and move it to our `.ssh` directory so that it used by default.
 
-```
+~~~
 $ chmod 600 myPrivateKey.key
 $ mv myPrivateKey.key ~/.ssh/id_rsa
-```
+~~~
 
 I have found that Cloudera Manager does not like the private key format very much though. Let's convert it right now and keep the generated file somewhere, we will need it later:
 
-```
+~~~
 $ openssl rsa -in ~/.ssh/id_rsa -out PrivateKeyCDH
-```
+~~~
 
 Creating the Virtual Network
 ----------------------------
@@ -73,21 +73,21 @@ We will use the cross-platform command-line tools to create our VMs. If you have
 
 Create the Affinity Group:
 
-```
+~~~
 azure account affinity-group create --location "West Europe" ezwest
-```
+~~~
 
 Register the DNS server:
 
-```
+~~~
 azure network dnsserver register -i mycdh 10.0.0.4
-```
+~~~
 
 Create the Virtual Network:
 
-```
+~~~
 azure network vnet create --address-space 10.0.0.0 --cidr 8 --subnet-name cdh --subnet-start-ip 10.0.0.0 --subnet-cidr 24 --affinity-group ezwest --dns-server-id mycdh cdhvnet
-```
+~~~
 
 Read on if you want to understand more about the Virtual Network configuration, otherwise you can just skip to the next step!
 
@@ -109,7 +109,7 @@ This is really a shortcut, and the longer way is to create the Virtual Network i
 
 And now the configuration file:
 
-```xml
+~~~xml
 <NetworkConfiguration xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/ServiceHosting/2011/07/NetworkConfiguration">
   <VirtualNetworkConfiguration>
     <Dns>
@@ -134,7 +134,7 @@ And now the configuration file:
     </VirtualNetworkSites>
   </VirtualNetworkConfiguration>
 </NetworkConfiguration>
-```
+~~~
 
 Make sure you use your Affinity Group name in the AffinityGroup attribute of the VirtualNetworkSite element!
 
@@ -145,25 +145,25 @@ Creating our Admin/DNS VM
 
 We will prepare a Storage Account in our new Affinity Group, where the Virtual Machine disks will be stored. We can do this from the command line:
 
-```
+~~~
 $ azure account storage create --affinity-group cdh-AG cdhstorage
-```
+~~~
 
 Now let's find a good Linux image to use. You can use the following command to list all current images.
 
-```
+~~~
 $ azure vm image list
-```
+~~~
 
 In my case I am going to choose Ubuntu 12.04:
 
-```
+~~~
 b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu-12_04_2-LTS-amd64-server-20130415-en-us-30GB
-```
+~~~
 
 Now let's create our first VM. This VM will become our DNS server and will also be used to run the Cloudera Manager. For this first step we ask for a "small" size since we don't need to run much stuff. We specify that we want to open the SSH port for remote shell, and add our SSH certificate so that the VM is properly setup for authentication. We also specify our Virtual Network and Subnet so that the VM gets assigned an IP address from the prefix we selected. Finally, we need to specify the Affinity Group, obviously the same we used when creating the Virtual Network.
 
-```
+~~~
 $ azure vm create --virtual-network-name cdh --subnet-names Subnet-1 --affinity-group cdh-AG --vm-size small \
 --ssh 22 --ssh-cert ./myCert.pem mycdh \
 b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu-12_04_2-LTS-amd64-server-20130415-en-us-30GB tom 'xxx'
@@ -175,17 +175,17 @@ info:    Executing command vm create
 + Configuring certificate
 + Creating VM
 info:    vm create command OK
-```
+~~~
 
 You can check the configuration details of your new VM using the following command:
 
-```
+~~~
 $ azure --json vm list
-```
+~~~
 
 This will output a JSON document containing the details for all your VMs, and the one you just created should look like this:
 
-```
+~~~
 {
     "DNSName": "mycdh.cloudapp.net",
     "VMName": "mycdh",
@@ -208,7 +208,7 @@ This will output a JSON document containing the details for all your VMs, and th
         ]
     }
 }
-```
+~~~
 
 As you can see, the internal IP address assigned to your VM is indeed `10.0.0.4`, and thus will be used as DNS server by all the VMs we will create next. Now let's turn this VM into an actual DNS!
 
@@ -219,27 +219,27 @@ Configuring the DNS using BIND
 
 Now if you look at your DNS configuration, you should see something like this:
 
-```
+~~~
 # cat /etc/resolv.conf
 # Dynamic resolv.conf(5) file for glibc resolver(3) generated by resolvconf(8)
 #     DO NOT EDIT THIS FILE BY HAND -- YOUR CHANGES WILL BE OVERWRITTEN
 nameserver 10.0.0.4
 search 52601348a18744ec9cbf2e9c992072da.mycdh.3744114705.europewest.internal.cloudapp.net
-```
+~~~
 
 This is fine, however in order to install our DNS we need to be able to resolve names until we have installed BIND on our VM! For now, temporarily comment out 10.0.0.4 and use a public DNS:
 
-```
+~~~
 #nameserver 10.0.0.4
 nameserver 8.8.8.8
-```
+~~~
 
 Now you should have DNS resolution in order to run apt-get and install BIND:
 
-```
+~~~
 # apt-get install bind9
 # /usr/sbin/named
-```
+~~~
 
 Now that BIND is running, you should be able to switch your DNS back to `10.0.0.4` in `/etc/resolv.conf`.
 
@@ -247,7 +247,7 @@ We are going to configure BIND in order to resolve our host names. We don't need
 
 You can edit named.conf.local and add the following lines:
 
-```
+~~~
 zone "internal" {
         type master;
         file "/etc/bind/db.internal";
@@ -257,13 +257,13 @@ zone "10.in-addr.arpa" {
         type master;
         file "/etc/bind/db.10";
 };
-```
+~~~
 
 You then basically copy db.empty as a starting point and add your configuration. This should look like this:
 
 In `db.internal`:
 
-```
+~~~
 $TTL    86400
 @       IN      SOA     localhost. root.localhost. (
                               1         ; Serial
@@ -275,11 +275,11 @@ $TTL    86400
 @       IN      NS      ns.internal.
 ns      IN      A       10.0.0.4
 mycdh   IN      A       10.0.0.4
-```
+~~~
 
 In `db.10`:
 
-```
+~~~
 $TTL    86400
 @       IN      SOA     localhost. root.localhost. (
                               1         ; Serial
@@ -290,7 +290,7 @@ $TTL    86400
 ;
 @       IN      NS      ns.internal.
 4.0.0   IN      PTR     mycdh.internal.
-```
+~~~
 
 Now you should run a few tests using `nslookup` to make sure everything is in order, e.g. the forward and reverse resolutions work.
 
@@ -303,15 +303,15 @@ We are now ready to create more virtual machines! These will be the actual nodes
 
 You can quickly create four instances from the Bash prompt using a mini-script like this:
 
-```
+~~~
 $ for i in 1 2 3 4; do
 > azure vm create --virtual-network-name cdh --subnet-names Subnet-1 --affinity-group cdh-AG --vm-size large --ssh 22 --ssh-cert ./myCert.pem mycdh-$i b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu-12_04_2-LTS-amd64-server-20130415-en-us-30GB tom 'Pass123!'
 > done
-```
+~~~
 
 This should give you four more machines in a few minutes. You can quickly check the DNS names and IP addresses allocated like this for example:
 
-```
+~~~
 $ azure --json vm list | egrep '(DNSName|IPAddress)'
     "DNSName": "mycdh-2.cloudapp.net",
     "IPAddress": "10.0.0.6",
@@ -323,104 +323,104 @@ $ azure --json vm list | egrep '(DNSName|IPAddress)'
     "IPAddress": "10.0.0.5",
     "DNSName": "mycdh.cloudapp.net",
     "IPAddress": "10.0.0.4",
-```
+~~~
 
 These are the name and addresses that we will add to our BIND configuration in order to resolve all the names and addresses.
 
 We are then going to add some additional storage, for my test I will use 150GB drives, however you could use as much as 1TB per disk, and even add several of these disks to each machine if you need even more storage.
 
-```
+~~~
 $ for i in 1 2 3 4; do
 > azure vm disk attach-new mycdh-$i 150
 > done
-```
+~~~
 
 Now we are going to switch to the first machine we created, our "admin" machine, to further configure our new VMs. Let's copy our SSH key over so that we can connect to all other VMs from our first one:
 
-```
+~~~
 $ scp ~/.ssh/id_rsa mycdh.cloudapp.net:.ssh/
-```
+~~~
 
 Once logged on our admin machine, let's add the IP addresses of our nodes to BIND's configuration (use `kill -HUP` again on the `named` process to force BIND to re-read its configuration files).
 
 In `db.internal`:
 
-```
+~~~
 mycdh-1 IN      A       10.0.0.5
 mycdh-2 IN      A       10.0.0.6
 mycdh-3 IN      A       10.0.0.7
 mycdh-4 IN      A       10.0.0.8
-```
+~~~
 
 In `db.10`:
 
-```
+~~~
 5.0.0   IN      PTR     mycdh-1.internal.
 6.0.0   IN      PTR     mycdh-2.internal.
 7.0.0   IN      PTR     mycdh-3.internal.
 8.0.0   IN      PTR     mycdh-4.internal.
-```
+~~~
 
 To make things easier, you can also add the following line to `/etc/resolv.conf` in order to make "internal" the default domain searched, so that you don't have to type the complete name each time:
 
-```
+~~~
 search internal
-```
+~~~
 
 You should now be able to log on to all three other VMs using their FQDN, this will initialize the SSH trust and make sure you can connect without being prompted for a password.
 
-```
+~~~
 $ ssh mycdh-1
 $ ssh mycdh-2
 $ ssh mycdh-3
 $ ssh mycdh-4
-```
+~~~
 
 Now we have to make it so we can run commands on all nodes as root via `sudo`. We are going to overwrite the configuration created by the Windows Azure Agent at first boot (`/usr/sbin/waagent`) to make sure we can `sudo` without a password. Of course you should replace the account there by the account you created when you ran the `azure vm create` commands. First on our admin machine:
 
-```
+~~~
 # echo "tom ALL = (ALL) NOPASSWD: ALL" > /etc/sudoers.d/waagent
-```
+~~~
 
 Let's do this on all our nodes:
 
-```
+~~~
 $ for i in mycdh-1 mycdh-2 mycdh-3 mycdh-4
 > do
 > ssh -t $i "sudo bash -c 'echo \"tom ALL = (ALL) NOPASSWD: ALL\" > /etc/sudoers.d/waagent'"
 > done
-```
+~~~
 
 Now you can run commands as root without ever being prompted for a password. What really happens is that you ssh implicitly using your current user name ("tom" in my case), since it exists on all machines. You can then execute "sudo" via ssh, and pass it a command to execute as root in turn, e.g.:
 
-```
+~~~
 $ ssh tomcdh-2 sudo id
-```
+~~~
 
 If you get warnings from sudo about not being able to resolve host names, you need to add the "search" option to resolv.conf on the other machines as well:
 
-```
+~~~
 $ for i in mycdh-1 mycdh-2 mycdh-3 mycdh-4
 > do
 > ssh -t $i "sudo bash -c 'echo \"search internal\" >> /etc/resolv.conf'"
 > done
-```
+~~~
 
 You will then need to partition, format and mount the new disk on every machine. You can easily log in as root using:
 
-```
+~~~
 $ ssh -t mycdh-1 sudo -i
-```
+~~~
 
 And then use the following shell snippet. It will partition with `sfdisk` the Windows Azure volume that you attached previously using `azure vm disk attach-new`, format it, add it to `fstab`, and finally mount it on `/data`.
 
-```
+~~~
 echo "," | sfdisk /dev/sdc
 mkfs.ext3 /dev/sdc1
 echo "/dev/sdc1 /data ext3 defaults 0 0" >> /etc/fstab
 mkdir /data
 mount /data
-```
+~~~
 
 Do this for all four VMs. Now you should have a formatted disk mounted on `/data` on every of your future nodes.
 
@@ -429,28 +429,28 @@ Preparing for installation
 
 Let's `apt-get update` on our admin VM and all four nodes:
 
-```
+~~~
 $ sudo apt-get update
 $ for i in mycdh-1 mycdh-2 mycdh-3 mycdh-4; do ssh -t $i sudo apt-get update; done
-```
+~~~
 
 I am now looking at the ["Cloudera Manager Free Edition Installation Guide"](http://www.cloudera.com/content/cloudera-content/cloudera-docs/CM4Free/latest/Cloudera-Manager-Free-Edition-Installation-Guide/Cloudera-Manager-Free-Edition-Installation-Guide.html), and more precisely the section "Automated Installation of Cloudera Manager and CDH".
 
 Let's download and run the installer:
 
-```
+~~~
 $ wget http://archive.cloudera.com/cm4/installer/latest/cloudera-manager-installer.bin
 $ chmod +x ./cloudera-manager-installer.bin
 $ sudo ./cloudera-manager-installer.bin
-```
+~~~
 
 You should now see the beautiful retro-vintage text-based Cloudera Manager installation screen! Accept (and read) all the licenses, then the installation will proceed and, if everything goes well, you will be presented with the following success screen.
 
 As instructed, we need to connect to the Web application on port 7180. Since we are running on a server VM, we don't have a browser we can launch to open localhost, so let's instead open the port to the outside world:
 
-```
+~~~
 $ azure vm endpoint create mycdh 7180
-```
+~~~
 
 >Note :this currently fails in the CLI, see [Issue #543](https://github.com/WindowsAzure/azure-sdk-tools-xplat/issues/543). For now we have to use the Portal to create endpoints on VMs that are part of a Virtual Network.
 
@@ -465,9 +465,9 @@ On the "Thank you" screen, click Continue.
 
 On the "Specify hosts", use the following pattern to describe your hosts:
 
-```
+~~~
 mycdh-[1-4].internal
-```
+~~~
 
 You need to specify the FQDN, otherwise you will run into problems later when the JobTracker looks up the IP address for validation: the reverse lookup must exactly match the hostname used.
 
@@ -475,9 +475,9 @@ On the first "Cluster Installation" screen, I removed Impala but otherwise I lef
 
 On the "SSH credentials" screen, you will need to check "Another user" and enter the username used to log on your VMs. You will also need to check "All hosts accept same private key" and provide the key we generated above. I run [Cygwin](http://www.cygwin.com/) on my Windows machine and I used this command to copy the key from my Linux workstation in Windows Azure to `C:\TEMP`:
 
-```
+~~~
 $ scp tom@tombuntu.cloudapp.net:~/cloudera_beta/PrivateKeyCDH /cygdrive/c/TEMP
-```
+~~~
 
 Click Continue and confirm that you are not using an SSH passphrase.
 
@@ -512,7 +512,7 @@ Annex 2: Installation the Windows Azure command-line tools for Mac/Linux
 
 First install Node.JS, don't forget to check on the [Node.JS downloads](http://nodejs.org/download/) page what is the latest version!
 
-```
+~~~
 $ sudo apt-get update
 $ sudo apt-get install build-essential
 $ wget http://nodejs.org/dist/v0.10.5/node-v0.10.5.tar.gz
@@ -520,16 +520,16 @@ $ tar xf node-v0.10.5.tar.gz
 $ cd node-v0.10.5/
 $ ./configure
 $ sudo make install
-```
+~~~
 
 Then install the Windows Azure CLI using `npm`:
 
-```
+~~~
 $ sudo npm install azure-cli -g
-```
+~~~
 
 Then initialize the Windows Azure CLI:
 
-```
+~~~
 $ azure account import Azure-credentials.publishsettings
-```
+~~~

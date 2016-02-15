@@ -14,12 +14,12 @@ You should really read the [Yun guide](http://arduino.cc/en/Guide/ArduinoYun) to
 
 In my case, I would like to explore some options to secure my HTTP calls. Since we have cURL already installed on the Yun and compiled with SSL support, it means we could send our data from the Linux command-line like this (note the _https_ protocol):
 
-```
+~~~
 curl -k -v -X POST -H Content-Type:application/json \
 -H X-ZUMO-APPLICATION:YaRWxxxxzKGRxxxxLPiNxxxxXYOvxxxx \
 -d '{"test": 42}' \
 https://arduinouno.azure-mobile.net/tables/telemetry
-```
+~~~
 
 Here I am using `-k` to bypass certificate verification; ideally you would [install a CA cert bundle](http://curl.haxx.se/docs/sslcerts.html) to make sure the server is certificate is valid.
 

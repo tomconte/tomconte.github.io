@@ -98,51 +98,51 @@ Now that we have a minimal Debian VM running, we need to add a few things in ord
 
 Log in as `root` in your VM.
 
-```
+~~~
 apt-get install -y sudo openssh-server
-```
+~~~
 
 The Linux Agent has a few dependencies we need to install:
 
-```
+~~~
 apt-get install -y python parted
-```
+~~~
 
 We also need CA certificates in order to be able to use WGet with SSL:
 
-```
+~~~
 apt-get install -y ca-certificates
-```
+~~~
 
 Then the Agent itself, I recommend checking the [releases in the Github repo](https://github.com/Azure/WALinuxAgent/releases) and grab the latest one.
 
-```
+~~~
 wget https://github.com/Azure/WALinuxAgent/archive/WALinuxAgent-2.0.12.tar.gz
 tar xzf WALinuxAgent-2.0.12.tar.gz
 mv WALinuxAgent-WALinuxAgent-2.0.12/waagent /usr/sbin
 rm -rf WALinuxAgent-*
-```
+~~~
 
 Then initialize the Agent:
 
-```
+~~~
 chmod 755 /usr/sbin/waagent
 /usr/sbin/waagent -install -verbose
-```
+~~~
 
 Then we recommend a few kernel boot parameters to facilitate logging the console messages to the Azure infrastructure.
 
 Edit the `/etc/default/grub` file and modify the `GRUB_CMDLINE_LINUX` parameter as follows:
 
-```
+~~~
 GRUB_CMDLINE_LINUX="console=ttyS0 earlyprintk=ttyS0 rootdelay=300"
-```
+~~~
 
 Then run:
 
-```
+~~~
 update-grub
-```
+~~~
 
 Now everything is ready for Azure. You can reboot the machine and check everything starts automatically, e.g. `sshd` and the Agent.
 
@@ -158,20 +158,20 @@ Before you do this, you should also check the README for other interesting confi
 
 As a precaution, I would also advise authorizing your local user to `sudo` in case you get locked out of the root account (remember the Agent will remove the root password!). Edit `/etc/group` and add your username to the `sudo` group.
 
-```
+~~~
 waagent -force -deprovision
 export HISTSIZE=0
 halt
-```
+~~~
 
 # Upload the Debian VHD to Azure
 
 In order to upload your VHD to Azure, you will need to use the Azure PowerShell cmdlets. Make sure your PowerShell environment is configured to connect to your Azure subscription. The command is the following:
 
-```
+~~~
 Add-AzureVhd -Destination https://tconeu.blob.core.windows.net/vhdstore/debian-azure.vhd -LocalFilePath "C:\User
 s\Public\Documents\Hyper-V\Virtual hard disks\DebianAzure.vhd"
-```
+~~~
 
 Just change the Destination parameter to point to an existing Storage Account, and the LocalFilePath to the VHD you created in Hyper-V. The upload process can take a while, so it's probably the right time to go out and grab something to drink :)
 
@@ -179,9 +179,9 @@ Just change the Destination parameter to point to an existing Storage Account, a
 
 Since we are already in PowerShell, let's use that to create the VM Image based on our VHD. You can also do that using the Web portal if that is your cup of tea!
 
-```
+~~~
 Add-AzureVMImage -ImageName Debian -MediaLocation https://tconeu.blob.core.windows.net/vhdstore/debian-azure.vhd -OS Linux
-```
+~~~
 
 # Create a Debian VM
 

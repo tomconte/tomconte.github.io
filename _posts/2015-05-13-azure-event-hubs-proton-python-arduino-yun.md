@@ -17,32 +17,32 @@ First, here here are convenient download links to get the prebuilt binaries:
 
 You need to download these files, then copy them to your Arduino Yun, e.g. using the `scp` command or Putty's `pscp.exe`:
 
-```
+~~~
 scp openwrt-qpid-proton_0.8-1_ar71xx.ipk libpython2.7.so.1.0 root@192.168.240.1:
-```
+~~~
 
 Just replace the IP address by the one of your Yun. The default password for `root` on the Yun is `arduino`.
 
 Now log on to your Yun via `ssh` to install the package and move the library in place:
 
-```
+~~~
 opkg install openwrt-qpid-proton_0.8-1_ar71xx.ipk
 mv libpython2.7.so.1.0 /usr/lib
-```
+~~~
 
 This will install the Qpid Proton library and the Python bindings in `/usr/lib/proton`, and the Python library in `/usr/lib`.
 
 Before you can use the Python bindings, you need to update `/etc/profile` to add an environment variable pointing to the Proton directory:
 
-```
+~~~
 echo "export PYTHONPATH=/usr/lib/proton" >> /etc/profile
-```
+~~~
 
 Then reboot your Yun to make sure that setting is taken into account.
 
 Now you can use the following simple Python script to start sending data to Event Hubs ([Gist](https://gist.github.com/tomconte/c94af7efeccb2a274b82)). You will need to update the AMQP address for your event hub, including the **URL-encoded key**! The comments hopefully describe the different components clearly, they can all be found in the Management Portal under your Event Hubs configuration tab.
 
-```python
+~~~python
 #!/usr/bin/python
 
 # Send messages to an Azure Event Hub using the Apache Qpid Proton AMQP library.
@@ -73,22 +73,22 @@ message.body = unicode(sys.argv[1])
 message.address = address
 messenger.put(message)
 messenger.send()
-```
+~~~
 
 As you can see, the Python code is very simple! It takes the first parameter passed on the command line and puts it in the body of an AMQP message that is then sent to your Event Hub.
 
 Run the script like this:
 
-```
+~~~
 chmod +x event_hubs_send.py
 ./event_hubs_send.py "hello from yun"
-```
+~~~
 
 You should see the new message show up in your Event Hub. For an easy way to check what is going on in Event Hubs, use [Service Bus Explorer](http://aka.ms/sbexplorer) on Windows, which lets you consume the messages. For Linux / Mac OS, I have a small Python script you can run to dump all messages from an Event Hub.
 
 Now that this script is installed and working from the Yun command line, we can call it from a sketch running on the microcontroller, using the `Process` library!
 
-```c
+~~~c
 #include <Process.h>
 
 void setup() {
@@ -109,7 +109,7 @@ void loop() {
   
   delay(1000);
 }
-```
+~~~
 
 Of course you could improve the script and sketch to handle error codes, etc.
 

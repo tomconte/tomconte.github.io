@@ -16,21 +16,21 @@ The very minimum you will need to rebuild AJTC is the SCons build tool and its p
 
 Currently (in version 14.06), the AJTC does not build out of the box with Visual Studio 2013 (it requires VS 2012). However that is really easy to change, since the build tool does have support for VS 2013. All you need to do is to edit the Thin Client's SConscript in `core/ajtcl` to add '12.0' to the list of `allowed_values` in `MSVC_VERSION`.
 
-```
+~~~
 vars.Add(EnumVariable('MSVC_VERSION', 'MSVC compiler version - Windows', default_msvc_version, allowed_values=('8.0', '9.0', '10.0', '11.0', '11.0Exp', '12.0')))
-```
+~~~
 
 You can then run the build using the following command:
 
-```
+~~~
 scons WS=off MSVC_VERSION=12.0
-```
+~~~
 
 This should allow you to compile the library and samples. In order to test the samples though, you will also need to run an Alljoyn daemon on your machine, since the thin clients do not include a bundled daemon. You can find a sample daemon in the full Alljoyn SDK: download [alljoyn-14.06.00-win7x64vs2012-sdk.zip](https://allseenalliance.org/releases/alljoyn/14.06.00/alljoyn-14.06.00-win7x64vs2012-sdk.zip) (or the equivalent 32-bit archive), unzip it, and you will find an executable named `SampleDaemon.exe` in `cpp\bin\samples`. You can run this daemon with the `-n` argument to pass the name of the bus you want to create, e.g.:
 
-```
+~~~
 SampleDaemon.exe -n org.alljoyn.Bus.sample
-```
+~~~
 
 Then you can run the thin client `basic_service.exe` to expose the service on the bus, and `basic_client.exe` to call it.
 
@@ -77,16 +77,16 @@ For that, let's create another another Galileo Wiring App in Visual Studio. We a
 
 Now you must surround the Alljoyn include directives with `extern "C"`:
 
-```
+~~~
 extern "C" {
 #include <aj_debug.h>
 #include "alljoyn.h"
 }
-```
+~~~
 
 And you will need to modify the `main` function to match the Arduino/Wiring conventions:
 
-```
+~~~
 int _tmain(int argc, _TCHAR* argv[])
 {
 	return RunArduinoSketch();
@@ -107,7 +107,7 @@ void loop()
 {
 	AJ_Main();
 }
-```
+~~~
 
 You should now be able to build the sample. To run in on the Galileo, your board must be powered up and connected to the network. It should show up in the Galileo Watcher application with a number of details, like the board name and the IP address. Before you try to run the sample, make sure that you type the appropriate board name or IP address in the "Remote Server Name" in the "Debugging" project properties section. This is the address where Visual Studio will try to connect to execute the program.
 
@@ -117,10 +117,10 @@ To test, make sure you have first started the Sample Daemon as instructed above.
 
 Another way to start the service is via telnet, directly to the board. From your Galileo Watcher window, right-click on your board and select the "Telnet Here" option (you must first install the telnet client via "Programs and Features"). You will be prompted for your credentials, and you will be logged into your board! You will find your executables in `C:\test` and you can run them manually:
 
-```
+~~~
 C:\test
 GalileoAJTCSample.exe
-```
+~~~
 
 This will allow you to see the standard output from the application.
 
