@@ -1,6 +1,6 @@
 ---
 layout: post
-date: 2015-10-07
+date: 2016-02-15
 title: Sending messages to Azure IoT Hub in Python using Qpid Proton
 ---
 
