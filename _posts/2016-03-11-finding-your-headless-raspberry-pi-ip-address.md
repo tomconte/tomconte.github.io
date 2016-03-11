@@ -38,7 +38,7 @@ ssh pi@169.254.0.2
 
 ## Getting notified of your final IP address
 
-Now that you have access to your Pi, you want to put something in place so that you can figure out its final IP address when you plug it into a real Ethernet LAN. The trick here is that the Raspbian Jessie network management system is a bit different from a stock Debian distro, e.g. the usual ` /etc/network/if*` scripts are not used.
+Now that you have access to your Pi, you want to put something in place so that you can figure out its final IP address when you plug it into a real Ethernet LAN. The trick here is that the Raspbian Jessie network management system is a bit different from a stock Debian distro, e.g. the usual `/etc/network/if-*` scripts are not used.
 
 Instead, Raspbian uses [`dhcpcd`](http://roy.marples.name/projects/dhcpcd/index) to handle network configuration in a simplified manner, which causes much confusion if you are used to the usual Debian way of things.
 
