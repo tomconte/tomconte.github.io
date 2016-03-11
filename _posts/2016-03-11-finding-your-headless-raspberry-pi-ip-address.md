@@ -8,7 +8,7 @@ When working on various Raspberry Pi projects, I mostly use the little buggers i
 
 Here are my notes on how to solve this problem, using a Raspberry Pi running [Raspbian Jessie](https://www.raspberrypi.org/downloads/raspbian/).
 
-= First boot
+# First boot
 
 The first trick is logging on the Pi after its first boot. For that, I use a *direct Ethernet connection between my Windows laptop and the Raspberry Pi*: with the Pi turned off, just use a regular Ethernet cable and connect the two Ethernet ports together. Thanks to [Auto MDI-X](https://en.wikipedia.org/wiki/Medium-dependent_interface#Auto_MDI-X), you don't have to worry about using a crossover or patch cable. Then, power on the Pi.
 
@@ -36,7 +36,7 @@ Now your Pi should be accessible via the "link local" address! Try it out:
 ssh pi@169.254.0.2
 ~~~
 
-= Getting notified of your final IP address
+# Getting notified of your final IP address
 
 Now that you have access to your Pi, you want to put something in place so that you can figure out its final IP address when you plug it into a real Ethernet LAN. The trick here is that the Raspbian Jessie network management system is a bit different from a stock Debian distro, e.g. the usual ` /etc/network/if*` scripts are not used.
 
