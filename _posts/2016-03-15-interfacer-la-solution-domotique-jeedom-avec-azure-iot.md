@@ -4,9 +4,7 @@ date: 2016-03-15
 title: Interfacer la solution domotique Jeedom avec Azure IoT
 ---
 
-Dans cet article je vais vous détailler plusieurs façons de relier votre installation Jeedom à Azure pour y exploiter vos données de domotique.
-
-[Jeedom](https://www.jeedom.com/site/fr/) est un logiciel Open Source d'origine française, qui vous permet de créer votre propre centre de contrôle domotique. Le logiciel peut s'installer sur un Raspberry Pi (ce que je vais utiliser), mais vous pouvez aussi acheter du matériel Jeedom plus performant si vous le souhaitez. Par l'intermédiaire d'un système de plugins disponible sur une place de marché, Jeedom peut s'interfacer avec de nombreux matériels et capteurs de type Z-Wave, RFXCom, EnOcean, etc. 
+Dans cet article je vais vous détailler plusieurs façons de relier votre installation Jeedom à Azure IoT Hub pour y exploiter vos données de domotique. [Jeedom](https://www.jeedom.com/site/fr/) est un logiciel Open Source d'origine française, qui vous permet de créer votre propre centre de contrôle domotique. Le logiciel peut s'installer sur un Raspberry Pi (ce que je vais utiliser), mais vous pouvez aussi acheter du matériel Jeedom plus performant si vous le souhaitez. Par l'intermédiaire d'un système de plugins disponible sur une place de marché, Jeedom peut s'interfacer avec de nombreux matériels et capteurs de type Z-Wave, RFXCom, EnOcean, etc. 
 
 Jeedom vous permet de contrôler et de visualiser vos appareils domotiques via une console Web, et il peut également historiser les valeurs reçues des capteurs dans une base MySQL locale. L'idée ici est de complémenter cette collecte standard en envoyant également des données dans [Azure IoT Hub](https://azure.microsoft.com/en-us/services/iot-hub/), ce qui pourra par la suite nous permettre d'utiliser les [autres services Azure IoT](https://azure.microsoft.com/en-us/solutions/iot-suite/) comme Stream Analytics ou Machine Learning pour traiter ces données dans le Cloud.
 
