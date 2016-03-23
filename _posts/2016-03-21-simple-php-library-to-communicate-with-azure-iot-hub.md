@@ -37,9 +37,9 @@ $host = 'hubbhub.azure-devices.net';
 $deviceId = 'php_device';
 $deviceKey = 'xxxxy5TAxxxx73VBxxxxq4WNxxxxaTIPxxxxEvkCxxxx';
 
-$client = new AzureIoTHub\IoTHubClient($host, $deviceId, $deviceKey);
+$client = new AzureIoTHub\DeviceClient($host, $deviceId, $deviceKey);
 
-$response = $client->Send('Hello World!');
+$response = $client->send('Hello World!');
 
 print($response->getStatusCode());
 ~~~
