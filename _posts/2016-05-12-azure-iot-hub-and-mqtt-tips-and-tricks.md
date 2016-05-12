@@ -1,3 +1,9 @@
+---
+layout: post
+date: 2016-05-12
+title: Azure IoT Hub and MQTT tips & tricks
+---
+
 Azure IoT Hub has had MQTT support for a little while now, as documented in this article: [IoT Hub MQTT support](https://azure.microsoft.com/en-us/documentation/articles/iot-hub-mqtt-support/). However it might sometimes be tricky to figure out how to use this information with currently available MQTT libraries. Here are a couple tips & tricks and code samples to get you started.
 
 First, read carefully the section titled [Using the MQTT protocol directly](https://azure.microsoft.com/en-us/documentation/articles/iot-hub-mqtt-support/#using-the-mqtt-protocol-directly); it describes how to assemble the credentials required to connect to the device endpoints. The article is self explanatory, but here are some tips:
