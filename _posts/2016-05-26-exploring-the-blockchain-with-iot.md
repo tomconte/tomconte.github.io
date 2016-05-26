@@ -1,5 +1,4 @@
 ---
-published: false
 layout: post
 date: 2016-05-26T00:00:00.000Z
 title: Exploring the Blockchain with IoT
@@ -34,4 +33,4 @@ Here are the key design points of the test/demo architecture I would like to bui
 - Some apps will run on the Pi and interact with the blockchain in different ways (background process, user interface) via the local Ethereum node.
 - A public Web app will be able to display some general network statistics and information, interacting with the cloud-hosted node.
 
-See you back here for the more technical posts! Any feedback is always welcome via Twitter: [@tomconte](twitter.com/share?text=%40tomconte%20).
+See you back here for the more technical posts! Any feedback is always welcome via Twitter: [@tomconte](https://twitter.com/tomconte).
