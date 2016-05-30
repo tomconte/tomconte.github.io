@@ -1,5 +1,5 @@
 ---
-published: false
+layout: post
 title: Deploying a private Ethereum blockchain on Azure and a Raspberry Pi
 ---
 
