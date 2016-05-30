@@ -1,5 +1,6 @@
 ---
 published: false
+title: Deploying a private Ethereum blockchain on Azure and a Raspberry Pi
 ---
 
 As part of exploring the blockchain technology, and specifically the Ethereum ecosystem, I have settled on an IoT-related use case around solar energy grids. You can read more background in the [first article in this series](/2016/05/26/exploring-the-blockchain-with-iot.html).
