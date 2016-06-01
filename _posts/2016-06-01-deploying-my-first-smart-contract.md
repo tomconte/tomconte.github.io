@@ -1,5 +1,6 @@
 ---
-published: false
+title: Deploying my first Ethereum Smart Contract
+layout: post
 ---
 Now that we have a private blockchain infrastructure, let's write our first Smart Contract! First, a few words about what I would like to achieve based on the scenario I described before...
 
@@ -85,6 +86,8 @@ Now let's try our contract. To load the Gist directly into the Ethereum browser-
 https://ethereum.github.io/browser-solidity/#gist=ca2e2927d72b472c5ee24f3db71a0987
 
 This will load the source code and compile it. Click on the friendly red "Create" button to run the contract! You can now interact with it using red buttons. For example, enter a value in the `setEnergy` field and press the corresponding button. Then click the `getCoinAccount` button to check that you were credited with some coins. 
+
+![The browser-based Solidity compiler](/images/2016-05-31_21-58-35.png)
 
 And now a few things I found out while iterating on this first version:
 
