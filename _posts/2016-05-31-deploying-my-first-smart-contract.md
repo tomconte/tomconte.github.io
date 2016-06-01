@@ -17,13 +17,13 @@ Here are a few bullet points about what I would like to achieve with the Smart C
 
 ## Tooling
 
-We will first use the common Ethereum "native" tools to develop the application and deploy it to our private blockchain, so we have an idea how everything works. Then in my next blog posts I will try a few integrated environments and frameworks like Ether.Camp, Truffle or BlockApps to see how they can improve the experience.
+We will first use the common Ethereum "native" tools to develop the application and deploy it to our private blockchain, so we have an idea how everything works. Then in my next blog posts I will try a few integrated environments and frameworks like [Ether.Camp](http://www.ether.camp/), [Truffle](http://truffle.readthedocs.io/en/latest/) or [BlockApps](http://www.blockapps.net/dashboard/quick-starts/blockchain-keyserver) to see how they can improve the experience.
 
-Here are a few resources that I used while coding my first contract.
+Here are a few of the resources that I used while coding my first contract.
 
-- https://solidity.readthedocs.io/en/latest/
-- https://github.com/ethereum/go-ethereum/wiki/Contract-Tutorial
-- The Ethereum coin/token example: https://www.ethereum.org/token
+- The [official Solidity documentation](https://solidity.readthedocs.io/en/latest/)
+- The [contract tutorial](https://github.com/ethereum/go-ethereum/wiki/Contract-Tutorial) on the Ethereum GitHub Wiki
+- The [Ethereum crypto-currency/coin/token tutorial](https://www.ethereum.org/token)
 
 ## Coding
 
@@ -97,7 +97,7 @@ And now a few things I found out while iterating on this first version:
 
 ## Deploying
 
-Now that we have our code running in the compiler, we want to deploy it to our private blockchain! You can check out my previous article to find out which setup I am using. In the spirit of learning, I am again going to do this using just the basic tools, i.e. the geth console.
+Now that we have our code running in the compiler, we want to deploy it to our private blockchain! You can check out my [previous article](/2016/05/30/deploying-a-private-Ethereum-blockchain.html) to find out which setup I am using. In the spirit of learning, I am again going to do this using just the basic tools, i.e. the geth console.
 
 Using the online compiler, it's pretty simple to export the contract code: just copy the code in the "web3 deploy" text box and paste it into a geth console. After a little while (the contract needs to be mined) you should see something like this:
 
@@ -107,7 +107,7 @@ address: 0xd761201a95b4e02ccdf720a40350e750d0245a9e
 transactionHash: 0x1ec5e7186f7fd7a0d43e5226a06711e2d915e26b53154d4ebef981d58d2570ff
 ~~~
 
-The address of the contract will be useful later, when you want to call it from another node. However for now, the deployment code should have created a nice JavaScript object that you can call right away to call the contract. In my case, the object is named `apollotrade`. We can use the web3 API to call methods (i.e. read values) and also to send transactions (i.e. change the contract state). For more details about the difference between transactions and calls, see the [Contracts and Transactions documentation](http://ethdocs.org/en/latest/contracts-and-transactions/contracts.html#interacting-with-a-contract).
+The address of the contract will be useful later, when you want to call it from another node. However for now, the deployment code should have created a nice JavaScript object that you can use right away to call the contract. In my case, the object is named `apollotrade`. We can use the web3 API to call methods (i.e. read values) and also to send transactions (i.e. change the contract state). For more details about the difference between transactions and calls, see the [Contracts and Transactions documentation](http://ethdocs.org/en/latest/contracts-and-transactions/contracts.html#interacting-with-a-contract).
 
 Basically here is how to sell some energy (via a transaction) and then retrieve your balance (via a call):
 
@@ -119,17 +119,17 @@ apollotrade.getCoinAccount.call()
 
 Since the contract is deployed on the blockchain, you can also use it from the Raspberry Pi: all you need to do is to get the ABI (Application Binary Interface) from the online compiler (the "interface" text box) and paste it into the geth console on the Pi in this way:
 
-~~~
-var abi = <ABI>
+~~~ javascript
+var abi = [...]
 ~~~
 
 You should also define a variable for the contract's address, as shown above:
 
-~~~
-var address = <address>
+~~~ javascript
+var address = "0xd761201a95b4e02ccdf720a40350e750d0245a9e"
 ~~~
 
-And now you can define the contract object locally:
+And then you can define the contract object locally:
 
 ~~~
 var apollotrade = eth.contract(abi).at(address)
