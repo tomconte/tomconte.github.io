@@ -67,8 +67,23 @@ filter.watch(function(error, result) {
   
 A `transaction` object looks like this:
 
-
+``` json
+{
+	"blockHash": "0x361464a30ecc10640fd859bc90844a30f0ddff561e6805fb657aff0567da7b4f",
+	"blockNumber": 131494,
+	"from": "0x4cf24bf15bfead008b22ea33b7c99a82326031a7",
+	"gas": 90000,
+	"gasPrice": "20000000000",
+	"hash": "0xa11e9aa7aff1bd6cb6c7d886cc531e75a8bcdea1ddcf387937aae3f3a0addb20",
+	"input": "0x4326ee36000000000000000000000000000000000000000000000000000000000000034b",
+	"nonce": 1477,
+	"to": "0x58b671784f4fa6b02e3dcac9f9dd215b66b5669b",
+	"transactionIndex": 0,
+	"value": "0"
+}
+```
 
 Unfortunately, as you can see the `input` property, which is where the arguments to the transactions are stored, is not exactly readable as is: it needs to be decoded to figure out which function was called, and what the parameters were.
 
+Fortunately the format is well described in the ABI documentation, and there are a couple of internal web3 classes we can use in order to facilitate the decoding.
 
