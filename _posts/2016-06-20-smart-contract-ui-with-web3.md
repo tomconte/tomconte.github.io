@@ -1,0 +1,74 @@
+---
+published: false
+---
+After deploying (my first smart contract on a private Ethereum blockchain)[], I wanted to start developing a small UI so I could see what was happening without having to watch a bunch of terminal windows!
+
+Once again, I started from scratch so I could experience the basic techniques required. (You can find the source code on GitHub)[], with some intructions on how to set it up if you want to try it.
+
+I decided to start with a simple HTML page, running locally on my PC, and interacting with a local `geth` client connected to my private chain. This is very easy to setup, all you need to do is follow on your PC the same steps (we used in the previous article for the Raspberry Pi)[]. Then you need to tell `geth` to start the RPC interface and allow incoming requests:
+
+``` sh
+geth --networkid 42 --nodiscover --rpc --rpccorsdomain "*" console
+```
+
+Then you will use Ethereum's JavaScript API, called web3, to interact with the Ethereum node. First you need to connect to the local node:
+
+``` javascript
+var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+```
+
+Once you got your `web3` object, you can start calling some APIs to find out what is going on in the blockchain. In my case I am simply updating a couple of labels on my Web page (using jQuery) so I have some information about my account. For example, to display your ETH balance, you can use:
+
+``` javascript
+var balanceWei = web3.eth.getBalance(account).toNumber();
+var balance = web3.fromWei(balanceWei, 'ether');
+```
+
+I am also displaying the current block number so we can see the blockchain grow:
+
+``` javascript
+var number = web3.eth.blockNumber;
+```
+
+## Calling smart contract functions
+
+The next step was to display some information returned by my smart contract's functions, `getEnergyAccount()` and `getCoinAccount()` (see the previous article for the details). This is a little bit more involved as it requires getting hold of the contract's ABI (Application Binary Interface) in order to interact with it.
+
+I used the browser-based Solidity compiler to generate the ABI, and saved it in a separate file `abi.js` that I can load from my application into the `abiArray` variable. I also need the smart contract address, in the `contractAddress` variable. I can then get hold of a JavaScript instance for my contract:
+
+``` javascript
+var contract = web3.eth.contract(abiArray).at(contractAddress);
+```
+
+And then I can cal my functions:
+
+``` javascript
+var coinBalance = contract.getCoinAccount.call();
+var energyBalance = contract.getEnergyAccount.call();
+```
+
+Note that these are *function calls*, not transactions: they are read-only and thus do not modify the state of the blockchain. This is why I can call them directly and get the result synchronously: they will be executed on the local node. I will wire up my transactions in a future article!
+
+## Introspecting the transactions
+
+The next thing I wanted to be able to display in my UI is a log of the transactions, including the input parameters, so I can easily visualize the activity being performed on the blockchain by all the other participants.
+
+It is fairly easy to log all transactions by setting up a filter that watches the latest blocks, then extract some block metadata and also all the transactions stored in the block:
+
+
+``` javascript
+var filter = web3.eth.filter('latest');
+filter.watch(function(error, result) {
+  var block = web3.eth.getBlock(result, true);
+  console.log('block #' + block.number);
+  console.dir(block.transactions);
+}
+```
+  
+A `transaction` object looks like this:
+
+
+
+Unfortunately, as you can see the `input` property, which is where the arguments to the transactions are stored, is not exactly readable as is: it needs to be decoded to figure out which function was called, and what the parameters were.
+
+
