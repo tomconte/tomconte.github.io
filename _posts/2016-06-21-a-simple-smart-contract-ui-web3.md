@@ -1,6 +1,7 @@
 ---
 published: false
 layout: post
+title: A simple smart contract Web UI using web3.js
 ---
 After deploying (my first smart contract on a private Ethereum blockchain)[], I wanted to start developing a small UI so I could see what was happening without having to watch a bunch of terminal windows!
 
