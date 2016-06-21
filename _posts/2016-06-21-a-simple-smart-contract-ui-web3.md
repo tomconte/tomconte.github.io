@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 layout: post
 title: A simple smart contract Web UI using web3.js
 ---
