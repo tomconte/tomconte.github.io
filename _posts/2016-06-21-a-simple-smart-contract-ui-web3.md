@@ -131,3 +131,5 @@ var inputData = SolidityCoder.decodeParams(["uint256"], t.input.substring(10));
 ```
 
 And this is the final result, showing the various bits of information about my account, plus a log of the transactions that were observed. As you can see, I can identify the smart contract as well as myself, however for all the other transactions I am merely displaying the account addresses. You can see the function parameters being properly decoded, which allows me to see what transactions are being executed within my blockchain.
+
+![The Web UI dashboard](/images/snip_20160621160847.png)
