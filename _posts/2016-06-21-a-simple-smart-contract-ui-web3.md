@@ -3,7 +3,7 @@ published: false
 layout: post
 title: A simple smart contract Web UI using web3.js
 ---
-After deploying (my first smart contract on a private Ethereum blockchain)[], I wanted to start developing a small UI so I could see what was happening without having to watch a bunch of terminal windows!
+After deploying [my first smart contract on a private Ethereum blockchain](http://hypernephelist.com/2016/06/01/deploying-my-first-smart-contract.html), I wanted to start developing a small UI so I could see what was happening without having to watch a bunch of terminal windows!
 
 Once again, I started from scratch so I could experience the basic techniques required. [You can find the source code on GitHub](https://github.com/tomconte/solarchain-dashboard), with some intructions on how to set it up if you want to try it.
 
