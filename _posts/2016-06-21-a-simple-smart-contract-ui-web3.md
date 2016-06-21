@@ -42,7 +42,7 @@ I used the browser-based Solidity compiler to generate the ABI, and saved it in 
 var contract = web3.eth.contract(abiArray).at(contractAddress);
 ```
 
-And then I can cal my functions:
+And then I can call my functions:
 
 ``` javascript
 var coinBalance = contract.getCoinAccount.call();
