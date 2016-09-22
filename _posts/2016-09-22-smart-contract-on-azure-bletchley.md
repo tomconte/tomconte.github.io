@@ -1,7 +1,7 @@
 ---
-title: Publishing a Smart Contract on the Azure Bletchley infrastructure
-layout: post
 published: true
+layout: post
+title: Publishing a Smart Contract on the Azure Bletchley infrastructure
 ---
 
 At the [Ethereum Devcon2](https://ethereumfoundation.org/devcon/) conference, Microsoft unveiled the first iteration of the infrastructure platform for the [Project Bletchley](https://azure.microsoft.com/en-us/blog/bletchley-blockchain/) vision, in the form of a [Quickstart ARM template](https://azure.microsoft.com/en-us/documentation/templates/ethereum-consortium-blockchain-network/) that can be used to easily deploy a fully configured blockchain cluster.
