@@ -71,10 +71,10 @@ Error: account is locked
 
 Oops, what happened there? "account is locked"? Indeed, by default, for security purposes, neither Truffle nor `geth` give you any way to unlock your account remotely. In order to be able to deploy the contracts, and interact with the chain, you will first have to unlock the default account.
 
-You can do this by using ssh to log on to your transaction (front-end) node, using the admin user and the host address, and then using `geth` to unlock the account:
+You can do this by using ssh to log on one of your transaction (front-end) nodes, and then using `geth` to unlock the account. You can find the address of your transaction nodes from the Bletchley cluster status Web page, they will have a suffix of "-tx0", "-tx1", etc. To log on to the node, use the admin user name you defined when creating the cluster.
 
 ```
-ssh gethadmin@supersecret.northeurope.cloudapp.azure.com
+ssh gethadmin@supersecret-tx0.northeurope.cloudapp.azure.com
 ```
 
 Then attach to the running `geth` instance:
@@ -109,8 +109,6 @@ Running migration: 2_deploy_contracts.js
 Saving successful migration to network...
 Saving artifacts...
 ```
-
-However, note that at the time of writing the template does not allow inbound SSH connections by default. You will need to add a NAT entry to the load-balancer configuration in order to allow these connections. You can do this using the Management Portal, by finding the Load Balancer component within your Bletchley Resource Group, then in the "Inbound NAT rules" section, adding a new rule for the SSH service, targeting your transaction VM node.
 
 Truffle also has a neat testing console that will allow you to interact with your newly deployed contract. In the case of the MetaCoin example, you can try sending coins from your default account to another one (for example one you created using MetaMask, following the Bletchley walkthrough). This should work like this:
 
