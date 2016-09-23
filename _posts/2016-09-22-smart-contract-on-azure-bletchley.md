@@ -6,13 +6,13 @@ title: Publishing a Smart Contract on the Azure Bletchley infrastructure
 
 At the [Ethereum Devcon2](https://ethereumfoundation.org/devcon/) conference, Microsoft unveiled the first iteration of the infrastructure platform for the [Project Bletchley](https://azure.microsoft.com/en-us/blog/bletchley-blockchain/) vision, in the form of a [Quickstart ARM template](https://azure.microsoft.com/en-us/documentation/templates/ethereum-consortium-blockchain-network/) that can be used to easily deploy a fully configured blockchain cluster.
 
-The template has greate documentation, and we also have a detailed [walkthrough](https://aka.ms/blockchain-consortium-networks) to take you through all the steps, all the way to using the [MetaMask](https://metamask.io/) Ethereum wallet to send your first transactions.
+The template has great documentation, and we also have a detailed [walkthrough](https://aka.ms/blockchain-consortium-networks) to take you through all the steps, all the way to using the [MetaMask](https://metamask.io/) Ethereum wallet to send your first transactions.
 
-I wanted to go one step further and deploy a Smart Contract using ConsenSys's [Truffle](https://truffle.readthedocs.io/en/latest/) tool/framework. I have been using Truffle on a few projects lately, and it is a great tool that facilitates compiling, deploying and using Smart Contracts.
+I wanted to go one step further and deploy a Smart Contract using ConsenSys' [Truffle](https://truffle.readthedocs.io/en/latest/) tool/framework. I have been using Truffle on a few projects lately, and it is a great tool that facilitates compiling, deploying and using Smart Contracts.
 
 Truffle is based on [Node.JS](https://nodejs.org/en/), so you will need to go and install that first; I usually go for the latest and greatest "Current" release.
 
-On Windows, you will need a couple additional things, in order to get [node-gyp](https://github.com/nodejs/node-gyp) working so that you can build native modules: either the Visual C++ Build Tools or Visual Studio 2015, plus Python 2.7. You can also try Felix's [windows-build-tools](https://github.com/felixrieseberg/windows-build-tools) which should install everything in one go. Check out the node-gyp README file for all the details!
+On Windows, you will need a couple additional things, in order to get [node-gyp](https://github.com/nodejs/node-gyp) working so that you can build native modules: either the Visual C++ Build Tools or Visual Studio 2015, plus Python 2.7. You can also try Felix's [windows-build-tools](https://github.com/felixrieseberg/windows-build-tools) which should install everything in one go. Check out the [node-gyp README file](https://github.com/nodejs/node-gyp) for all the details!
 
 Also make sure you install the very latest `npm` release:
 
