@@ -35,13 +35,13 @@ In this example, I used the private key file for the `web3.eth.coinbase` acount;
 var privateKey = new Buffer('088c110b6861b6c6c57461370d661301b29a7570d59cb83c6b4f19ec4b47f642', 'hex')
 ```
 
-Now we will connect to our remote node:
+Then connect to our remote node:
 
 ``` javascript
 const web3 = new Web3(new Web3.providers.HttpProvider("http://tcoexownf.westeurope.cloudapp.azure.com:8545"));
 ```
 
-And now we can compile our code as usual, and retrieve the contract data:
+Now we can compile our code as usual, and retrieve the contract data:
 
 ``` javascript
 // Compile the source code
@@ -59,7 +59,7 @@ const contractData = contract.new.getData({
 });
 ```
 
-And now the interesting bit! We need to construct a raw transaction, including a few parameters we usually don't specify, like the gas and nonce to use:
+And finally the interesting bit! We need to construct a raw transaction, including a few parameters we usually don't specify, like the gas price and `nonce` to use:
 
 ``` javascript
 const gasPrice = web3.eth.gasPrice;
@@ -78,7 +78,9 @@ const rawTx = {
 };
 ```
 
-We can now sign this transaction using our private key:
+The transaction `nonce` should not be confused with the nonce used in mining. The one we need to include in the transaction is incremented by one for each transaction sent by the account, which is why we need to call `web3.eth.getTransactionCount()` to get the current transaction count.
+
+We can then sign this transaction using our private key:
 
 ``` javascript
 const tx = new Tx(rawTx);
