@@ -1,5 +1,5 @@
 ---
-title: Compile and deploy an Ethereum smart contract using client-side signature
+title: Compile and deploy an Ethereum smart contract using client-side signatures
 layout: post
 ---
 
@@ -25,9 +25,9 @@ Then we will need our private key in raw form, which is the first tricky part. S
 - For `geth`: in `.ethereum/keystore`
 - For Parity: in `.parity/keys`
 
-Once you found your private key file, you can use a tool like MyEtherWallet to decrypt your private key and display it in RAW form: go to the Wallet Info tab, select "Keystore File", select your key file, and enter your password. The next page will display a bunch of details about your account, and you will need to copy and paste the "Private Key (unencrypted)" string in the variable below.
+Once you found your private key file, you can use a tool like [MyEtherWallet](https://www.myetherwallet.com/#view-wallet-info) to decrypt your private key and display it in RAW form: go to the Wallet Info tab, select "Keystore File", select your key file, and enter your password. The next page will display a bunch of details about your account, and you will need to copy and paste the "Private Key (unencrypted)" string in the variable below.
 
-This is all fine because we are dealing with a consortium/private blockchain account for development purposes; do not do this with a real Ethereum public account!
+It's only OK to put this private key in the clear in the source code because we are dealing with a consortium/private blockchain account for development purposes; *do not do this with a real Ethereum public account!*
 
 In this example, I used the private key file for the `web3.eth.coinbase` acount; if you are using a different account, you will need to change it below.
 
