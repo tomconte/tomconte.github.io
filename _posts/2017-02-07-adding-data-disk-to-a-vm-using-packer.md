@@ -30,9 +30,9 @@ The only issue is that in order to add a data disk to the temporary VM that Pack
 
 I sent a [Pull Request to the Packer repo](https://github.com/mitchellh/packer/pull/4468) to add two new configuration variables to the Azure builder: `temp_compute_name` and `temp_resource_group_name`. These configuration variables allow you to choose the names for both elements, which you can then reuse in your local script.
 
-At the moment the PR has been merged but the changes have not been released yet, so you might have to get Packer from the GitHub master branch.
+> NOTE: at the moment of writing the PR has been merged but the changes have not been released yet, so you might have to get Packer from the GitHub master branch.
 
-You can add them to your Packer JSON file:
+You can add the new variables to your Packer JSON file:
 
 ``` json
     "temp_compute_name": "tmppackervm",
