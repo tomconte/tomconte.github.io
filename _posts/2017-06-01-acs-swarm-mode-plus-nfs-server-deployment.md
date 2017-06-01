@@ -5,6 +5,8 @@ layout: post
 
 This article details how to create a Docker swarm mode cluster using the Azure Container Service engine, alongside a separate Virtual Machine acting as an NFS server, then mount an NFS filesystem from a service running on the swarm.
 
+Throughout this post I will use the `az` command-line interface to Azure; if you don't have it installed, check the README in the [GitHub repo](https://github.com/Azure/azure-cli) for installation instructions.
+
 ## Prepare the resources
 
 We are going to create two resource groups, one for the shared resources (VNet and NFS server) and another one for the Swarm cluster. This way we can cleanly separate the two parts of the infrastructure.
@@ -46,7 +48,7 @@ This will display all the VNet details, including the various resources IDs; the
 
 ## Create a VM for the NFS server
 
-We are going to create a VM in the nfs-subnet where we will run the NFS server. The command below create an Ubuntu VM in the proper VNet/subnet, using SSH key authentication, and no public IP address.
+We are going to create a VM in the nfs-subnet where we will run the NFS server. The command below creates an Ubuntu VM in the proper VNet/subnet, using SSH key authentication, and no public IP address.
 
 ```
 az vm create -n nfs-server -g tco-swarm-shared \
