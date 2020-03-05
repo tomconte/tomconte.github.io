@@ -1,6 +1,6 @@
 ---
 title: "Azure VM Custom Script Extensions with Terraform"
-layou: post
+layout: post
 ---
 
 Terraform provides support for Azure Virtual Machine Custom Script extensions, that are often used to configure a newly created virtual machine and prepare it so it is ready to perform its role. Typical tasks performed in these custom scripts include installing additional packages, configuring system services, creating users, etc.
