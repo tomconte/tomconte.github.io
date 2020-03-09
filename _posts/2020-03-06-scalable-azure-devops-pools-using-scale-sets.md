@@ -45,7 +45,7 @@ The image is created by using `packer build`. Packer will instantiate a temporar
 
 Once the image is built, you are ready to create a VM Scale Set.
 
-## Deploying the Scale Set
+## Deploying the Scale Set
 
 According to the [documentation for Virtual Machine Scale Sets (VMSS)](https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/overview), *"Azure virtual machine scale sets let you create and manage a group of identical, load balanced VMs. The number of VM instances can automatically increase or decrease in response to demand or a defined schedule. Scale sets provide high availability to your applications, and allow you to centrally manage, configure, and update a large number of VMs."*
 
