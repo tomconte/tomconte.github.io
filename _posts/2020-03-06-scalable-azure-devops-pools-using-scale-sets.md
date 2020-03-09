@@ -61,7 +61,7 @@ Before you can deploy the template, you will need to edit `deploy-parameters.jso
 - `agentPat`: the Personal Access Token (PAT) used to configure the agent. Please read the [Azure DevOps documentation about Personal Access Tokens](https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=preview-page).
 - `agentPool`: the name of the Agent Pool where the agent should register.
 
-You can also look at the following element in xxx to modify the capacity of the Scale Set (i.e. number of nodes) and the VM SKU to use (i.e. the type and size of the VM). As you can see, in my example I am deploying two *Standard_F4s_v2* nodes.
+You can also look at the following element in `azuredeploy.json` to modify the capacity of the Scale Set (i.e. number of nodes) and the VM SKU to use (i.e. the type and size of the VM). As you can see, in my example I am deploying two *Standard_F4s_v2* nodes.
 
 ```
 "sku": {
