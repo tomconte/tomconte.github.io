@@ -3,8 +3,6 @@ title: "Data preparation at scale on Azure Machine Learning using Dask"
 layout: post
 ---
 
-## Introduction
-
 In a recent project, we worked with our customer on a sustainability project whose goal was to leverage geospatial and climate data to build a platform to perform machine learning model training and inference. The project was of the "machine learning operationalization" type, where we take a codebase that was written by data scientists and machine learning engineers, in the form of experimental Python notebooks, and we port this code to a platform where the processes of data preparation and model training can be automated using workflows and pipelines, and performed at scale.
 
 One of the challenges of the project was to find a cost-effective way to process hundreds of gigabytes of geospatial data at scale, to create the machine learning features required to train the models. In this post we will introduce the general technical context of the project, and we will then detail how we leveraged Azure Machine Learning Compute Clusters to perform these large-scale data preparation tasks using the [Dask](https://www.dask.org/) framework.
