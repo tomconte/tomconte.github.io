@@ -1,15 +1,7 @@
 ---
-post_title: 'Data preparation at scale on Azure ML using Dask'
-author1: tconte
-post_slug: data-prep-at-scale-on-azure-ml-using-dask
-post_date: 2023-02-23
-categories: Big Data, Machine Learning
-tags: Azure ML
-featured_image: check instructions below  
-summary: summary of the post
+title: "Data preparation at scale on Azure Machine Learning using Dask"
+layout: post
 ---
-
-# Data preparation at scale on Azure Machine Learning using Dask
 
 ## Introduction
 
