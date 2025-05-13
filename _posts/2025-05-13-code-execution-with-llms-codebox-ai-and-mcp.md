@@ -9,7 +9,7 @@ One of the key challenges was building a solution that could execute untrusted c
 
 ## What is CodeBox-AI?
 
-[CodeBox-AI](https://github.com/yourusername/codebox-ai) is a secure Python code execution service that provides a self-hosted alternative to OpenAI's Code Interpreter or Anthropic's Claude analysis tool. It isolates code execution in Docker containers, supports session-based execution with state persistence, and provides robust security controls to prevent dangerous operations.
+[CodeBox-AI](https://github.com/tomconte/codebox-ai) is a secure Python code execution service that provides a self-hosted alternative to OpenAI's Code Interpreter or Anthropic's Claude analysis tool. It isolates code execution in Docker containers, supports session-based execution with state persistence, and provides robust security controls to prevent dangerous operations.
 
 The main features include:
 
@@ -205,4 +205,4 @@ The project is still evolving, but it represents an important step toward more c
 
 For data scientists, developers, and analysts, tools like CodeBox-AI offer a glimpse of a future where AI assistants don't just suggest code but can actively participate in the development and analysis process, accelerating workflows and augmenting human capabilities.
 
-You can find the full source code for CodeBox-AI on GitHub at [https://github.com/yourusername/codebox-ai](https://github.com/yourusername/codebox-ai).
+You can find the full source code for CodeBox-AI on GitHub at [https://github.com/tomconte/codebox-ai](https://github.com/tomconte/codebox-ai).
