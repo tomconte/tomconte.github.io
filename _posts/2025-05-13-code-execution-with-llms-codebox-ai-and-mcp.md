@@ -5,11 +5,11 @@ layout: post
 
 In recent projects, I've been exploring the potential of large language models (LLMs) not just to generate code snippets but also to execute them safely in isolated environments. This combination creates powerful workflows where AI assistants can iteratively develop, test, and refine solutions while providing visualizations and insights from data analysis. The project was of the "AI augmentation" type, where we take the impressive code generation capabilities of models like GPT-4 and Claude, and extend them with a secure execution environment that lets the AI run its own code, evaluate the results, and refine its approach.
 
-One of the key challenges was building a solution that could execute untrusted code safely, maintain state between executions, and integrate seamlessly with different LLM providers. In this post, I'll introduce CodeBox-AI, a self-hosted Python code execution service, and demonstrate how it leverages the Model Context Protocol (MCP) to provide a standardized interface for LLM-powered applications.
+One of the key challenges was building a solution that could execute untrusted code safely, maintain state between executions, and integrate seamlessly with different LLM providers. In this post, I'll introduce CodeBox-AI, an experimental self-hosted Python code execution service, and demonstrate how it leverages the Model Context Protocol (MCP) to provide a standardized interface for LLM-powered applications.
 
 ## What is CodeBox-AI?
 
-CodeBox-AI is a secure Python code execution service that provides a self-hosted alternative to OpenAI's Code Interpreter or Anthropic's Claude analysis tool. It isolates code execution in Docker containers, supports session-based execution with state persistence, and provides robust security controls to prevent dangerous operations.
+[CodeBox-AI](https://github.com/yourusername/codebox-ai) is a secure Python code execution service that provides a self-hosted alternative to OpenAI's Code Interpreter or Anthropic's Claude analysis tool. It isolates code execution in Docker containers, supports session-based execution with state persistence, and provides robust security controls to prevent dangerous operations.
 
 The main features include:
 
@@ -23,7 +23,7 @@ The main features include:
 
 ## The Model Context Protocol (MCP)
 
-The Model Context Protocol (MCP) is an emerging standard that allows LLM applications to interact with tools and resources in a standardized way. MCP enables LLMs to access and manipulate contextual information, execute code, search through documents, and perform various other tasks through a consistent interface.
+The [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) is an emerging standard that allows LLM applications to interact with tools and resources in a standardized way. MCP enables LLMs to access and manipulate contextual information, execute code, search through documents, and perform various other tasks through a consistent interface.
 
 For CodeBox-AI, MCP provides a standardized way to expose its code execution capabilities to LLM applications. This means the same code execution service can be used with different LLMs without changing the integration code, whether you're using Claude Desktop, a custom GPT, or any other MCP-compatible application.
 
@@ -64,7 +64,7 @@ git clone https://github.com/yourusername/codebox-ai.git
 cd codebox-ai
 ```
 
-2. Install dependencies using uv (a faster alternative to pip):
+2. Install dependencies using `uv` (a faster alternative to `pip`):
 
 ```bash
 # Install uv if needed
@@ -91,7 +91,7 @@ The server exposes both a RESTful API for direct integration and an MCP interfac
 
 ## Integrating with LLMs through MCP
 
-One of the most powerful features of CodeBox-AI is its ability to integrate with Claude Desktop using the Model Context Protocol. This allows Claude to write and execute code in a controlled environment, visualize results, and refine its approach based on execution feedback.
+One of the most powerful features of CodeBox-AI is its ability to integrate with [Claude Desktop](https://modelcontextprotocol.io/quickstart/user) using the Model Context Protocol. This allows Claude to write and execute code in a controlled environment, visualize results, and refine its approach based on execution feedback.
 
 To register CodeBox-AI with Claude Desktop:
 
@@ -205,4 +205,4 @@ The project is still evolving, but it represents an important step toward more c
 
 For data scientists, developers, and analysts, tools like CodeBox-AI offer a glimpse of a future where AI assistants don't just suggest code but can actively participate in the development and analysis process, accelerating workflows and augmenting human capabilities.
 
-You can find the full source code for CodeBox-AI on GitHub at https://github.com/yourusername/codebox-ai.
+You can find the full source code for CodeBox-AI on GitHub at [https://github.com/yourusername/codebox-ai](https://github.com/yourusername/codebox-ai).
